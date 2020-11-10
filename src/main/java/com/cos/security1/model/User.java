@@ -1,13 +1,12 @@
 package com.cos.security1.model;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
+@ToString
 @Getter
 @NoArgsConstructor
 @Entity
@@ -26,13 +25,14 @@ public class User {
     @Column(nullable = false, length = 30)
     private String username;
 
-    @Column(nullable = false, length = 30)
-    private String phone;
-
     //    @ColumnDefault(("'user'"))
     // DB는 RoleType 타입이 없으므로 String이라는 것을 명시
     @Enumerated(EnumType.STRING)
     private RoleType role; // USER, MANAGER, ADMIN
+
+    private String provider;
+
+    private String providerId;
 
     @CreationTimestamp // 시간이 자동으로 입력
     private Timestamp createDate;
@@ -42,11 +42,12 @@ public class User {
     }
 
     @Builder
-    public User(String email, String password, String username, String phone, RoleType role) {
+    public User(String email, String password, String username, RoleType role, String provider, String providerId) {
         this.email = email;
         this.password = password;
         this.username = username;
-        this.phone = phone;
         this.role = role;
+        this.provider = provider;
+        this.providerId = providerId;
     }
 }

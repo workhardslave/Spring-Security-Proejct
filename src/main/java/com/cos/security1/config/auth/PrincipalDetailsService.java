@@ -1,7 +1,7 @@
 package com.cos.security1.config.auth;
 
 import com.cos.security1.model.User;
-import com.cos.security1.repository.UserRepository;
+import com.cos.security1.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,16 +14,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class PrincipalDetailsService implements UserDetailsService {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     // Security Session(내부 Authentication(내부 UserDeatils))
+    // 함수 종료시 @AuthenticationPrincipal 어노테이션이 만들어진다.
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
         System.out.println("email = " + email);
 
-        User principal = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("회원이 존재하지 않습니다. : " + email));
+        User principal = userService.findByEmail(email);
 
         return new PrincipalDetails(principal);
     }

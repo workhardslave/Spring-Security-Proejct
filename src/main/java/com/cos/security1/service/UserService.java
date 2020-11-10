@@ -2,6 +2,7 @@ package com.cos.security1.service;
 
 import com.cos.security1.dto.UserSaveRequestDto;
 import com.cos.security1.model.RoleType;
+import com.cos.security1.model.User;
 import com.cos.security1.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -27,5 +28,13 @@ public class UserService {
 //        dto.giveRole(RoleType.ADMIN);
 
         userRepository.save(dto.toEntity());
+    }
+
+    @Transactional(readOnly = true)
+    public User findByEmail(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseGet(() -> new User());
+
+        return user;
     }
 }

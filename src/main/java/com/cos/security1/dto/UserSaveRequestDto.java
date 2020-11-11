@@ -23,15 +23,6 @@ public class UserSaveRequestDto {
         this.password = password;
     }
 
-    public void oauthInfo(String email, String password, String username, RoleType role, String provider, String providerId) {
-        this.email = email;
-        this.password = password;
-        this.username = username;
-        this.role = role;
-        this.provider = provider;
-        this.providerId = providerId;
-    }
-
     // User의 builder를 통해 dto -> entity
     public User toEntity() {
         return User.builder()

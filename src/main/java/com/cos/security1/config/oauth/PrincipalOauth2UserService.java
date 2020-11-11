@@ -1,7 +1,6 @@
 package com.cos.security1.config.oauth;
 
 import com.cos.security1.config.auth.PrincipalDetails;
-import com.cos.security1.dto.UserSaveRequestDto;
 import com.cos.security1.model.RoleType;
 import com.cos.security1.model.User;
 import com.cos.security1.repository.UserRepository;
@@ -47,11 +46,17 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         User user = userService.findByEmail(email);
         if(user.getEmail() == null) {
             System.out.println("구글 로그인 최초");
-            UserSaveRequestDto dto = new UserSaveRequestDto();
-            dto.oauthInfo(email, password, username, role, provider, providerId); // 구글 정보 -> dto
-            user = dto.toEntity(); // dto -> entity
+
+            user = userRepository.save(user.builder()
+                    .email(email)
+                    .password(password)
+                    .username(username)
+                    .role(role)
+                    .provider(provider)
+                    .providerId(providerId)
+                    .build());
+
             System.out.println("user = " + user);
-            userRepository.save(user);
         }
 
         return new PrincipalDetails(user, oAuth2User.getAttributes());

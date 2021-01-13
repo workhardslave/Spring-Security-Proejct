@@ -1,5 +1,12 @@
 # Spring-Security-Project1
-Spring Security + OAuth 2.0
+구글, 페이스북, 카카오, 네이버 로그인 및 시큐리티를 이용한 권한 처리 예제
+
+## Requirements
+- JDK 1.8 ⬆
+- Java 8 ⬆
+- Maven 3.6.3 ⬆
+- MySQL 5.7.3 ⬆
+- Postman
 
 ## application.yml
 ```yml
